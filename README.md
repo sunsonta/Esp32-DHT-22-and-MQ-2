@@ -64,7 +64,7 @@ I use resistor 220 Ohm for each LED.
   ![image](https://github.com/user-attachments/assets/66613c9c-1830-4a61-ab9f-a18fab092c9c)
 
 ### Completion
-- Congratulations, you have successfully set everything up!
+- Congratulations, you have successfully set everything up! (If you want public to see your dashboard use something like ngrok.)
 
   ![image](https://github.com/user-attachments/assets/ba739e62-f810-4707-8cb5-4706ccd7947a)
 
