@@ -14,6 +14,36 @@
   }
 </script>
 
+<style>
+  :root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+  }
+  [data-theme="dark"] {
+    --background-color: #000000;
+    --text-color: #ffffff;
+  }
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+</style>
+
+<div style="text-align: right; margin-bottom: 10px;">
+  <a href="#" onclick="switchTheme()">Switch Theme</a>
+</div>
+
+<script>
+  function switchTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+      document.body.setAttribute('data-theme', 'light');
+    } else {
+      document.body.setAttribute('data-theme', 'dark');
+    }
+  }
+</script>
+
 <div id="content-en" style="display: block;">
   ESP32 for measuring gas and heat index.
 
@@ -153,7 +183,7 @@
     ![image](https://github.com/user-attachments/assets/ba739e62-f810-4707-8cb5-4706ccd7947a)
 
   ### เปลี่ยนภาษา (ไม่บังคับ)
-  - คุณอาจต้องเปลี่ยน `index` ในโฟลเดอร์เทมเพลตหากต้องการให้ส่วนติดต่อเป็นภาษาอังกฤษ
+  - คุณอาจต้องเปลี่ยน `index` ในโฟลเดอร์เทมเพลตหากต้องการให้หน้าเเสดงผลเป็นภาษาอังกฤษ
 
   [GitHub Repository](https://github.com/sunsonta/Esp32-DHT-22-and-MQ-2/tree/main)
 </div>
