@@ -1,10 +1,11 @@
+## Multilanguage
+
+[![lang-en](https://img.shields.io/badge/lang-en-red)](README.md) [![lang-th](https://img.shields.io/badge/lang-th-green)](README.th.md)
+
 # ESP32 for measuring gas and heat index
 
 ![Topic Picture](Photo/Ex1.jpg)
 
-## Multilanguage
-
-[![lang-en](https://img.shields.io/badge/lang-en-red)](README.md) [![lang-th](https://img.shields.io/badge/lang-th-green)](README.th.md)
 
 ## Table of Contents
 
