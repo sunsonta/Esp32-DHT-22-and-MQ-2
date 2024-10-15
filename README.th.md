@@ -1,5 +1,7 @@
-<div id="content-th" style="display: none;">
-  ESP32 สำหรับการวัดก๊าซและดัชนีความร้อน
+## เปลี่ยนภาษา
+
+[![lang-en](https://img.shields.io/badge/lang-en-red)](README.md) [![lang-th](https://img.shields.io/badge/lang-th-green)](README.th.md)
+  ESP32 ตรวจจับก๊าซและดัชนีความร้อน
 
   ![Topic Picture](Photo/Ex1.jpg)
 
@@ -45,7 +47,7 @@
     ![image](https://github.com/user-attachments/assets/f0674956-c26b-4fe3-b256-90b9cefeb025)
 
   ### แก้ไขโค้ด Python
-  - แก้ไข webpython.py เพื่อเปลี่ยนโทเค็นสำหรับการแจ้งเตือน หรือปล่อยว่างไว้หากไม่ต้องการ
+  - แก้ไข webpython.py เพื่อเปลี่ยนLineTokenสำหรับการแจ้งเตือนในLine Notify หรือปล่อยว่างไว้หากไม่ต้องการ
 
     ![image](https://github.com/user-attachments/assets/6f3ddd05-f835-4a04-a01b-29e8213af864)
 
