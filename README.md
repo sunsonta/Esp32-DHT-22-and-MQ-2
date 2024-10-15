@@ -49,7 +49,7 @@ I use resistor 220 Ohm for each LED.
   ![image](https://github.com/user-attachments/assets/f0674956-c26b-4fe3-b256-90b9cefeb025)
 
 ### Edit Python Code
-- Edit `webpython.py` to change the token for notifications, or leave it as is if not needed.
+- Edit `webpython.py` to change the token for Line notify, or leave it as is if not needed.
 
   ![image](https://github.com/user-attachments/assets/6f3ddd05-f835-4a04-a01b-29e8213af864)
 
