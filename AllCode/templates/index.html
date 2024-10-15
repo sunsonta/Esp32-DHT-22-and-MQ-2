@@ -1,0 +1,236 @@
+<!DOCTYPE html>  
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>เครื่องตรวจก๊าซเเละอุณหภูมิที่อันตรายต่อร่างกาย</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        #themeButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+        }
+        #myPlot {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .stats {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            background-color: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        .all-sensor-values {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        .sensor-values {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+        }
+        .sensor-values div {
+            font-size: 1.2em;
+        }
+        #alertBox {
+            color: white;
+            background-color: red;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            display: none;
+        }
+        #warningBox {
+            color: white;
+            background-color: orange;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            display: none;
+        }
+        /* Dark Theme Styles */
+        .dark-theme {
+            background-color: #333;
+            color: white;
+        }
+        .dark-theme #myPlot {
+            background-color: #444;
+            border-color: #666;
+        }
+        .dark-theme .all-sensor-values,
+        .dark-theme .stats {
+            background-color: #555;
+            border-color: #777;
+        }
+        .dark-theme #themeButton {
+            background-color: #666;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="themeButton" onclick="toggleTheme()">Light Theme</button>
+        <h1>หน้าเเสดงผลตรวจจับก๊าซเเละอุณหภูมิ</h1>
+
+        <!-- Warning and Danger Alert Boxes -->
+        <div id="warningBox">⚠️ เตือน: เเก๊สหรืออุณหภูมิถึงค่าอันตรายเเล้ว!</div>
+        <div id="alertBox">⚠️ อันตราย: เเก๊สหรืออุณหภูมิถึงค่าอันตรายเเล้วเเละเป็นระยะเวลาที่เป็นอันตราย ให้ออกจากห้องโดยด่วน</div>
+
+        <!-- Sensor Selection Dropdown -->
+        <div class="selector">
+            <label for="sensorSelect">เลือกเซ็นเซอร์:</label>
+            <select id="sensorSelect" onchange="changeSensor()">
+                <option value="temperature">ค่าอุณหภูมิ (°C)</option>
+                <option value="humidity">ค่าความชื้น (%)</option>
+                <option value="heat_index">ค่าดัชนีความร้อน (°C)</option>
+                <option value="lpg">ค่าก๊าซ LPG (ppm)</option>
+                <option value="co">ค่าก๊าซ CO (ppm)</option>
+                <option value="smoke">ค่าควัน (ppm)</option>
+            </select>
+        </div>
+
+        <!-- Plotly Graph Container -->
+        <div id="myPlot" style="width:100%; height:500px;"></div>
+
+        <!-- Stats for Avg, Min, Max -->
+        <div class="stats">
+            <div><strong>ค่าเฉลี่ย:</strong> <span id="avg">กำลังโหลด...</span></div>
+            <div><strong>ค่าตํ่าสุด:</strong> <span id="min">กำลังโหลด...</span></div>
+            <div><strong>ค่าสูงสุด:</strong> <span id="max">กำลังโหลด...</span></div>
+        </div>
+
+        <!-- Real-Time Sensor Values Display -->
+        <div class="all-sensor-values">
+            <h2>เเผงดูเซ็นเซอร์รวม</h2>
+            <div class="sensor-values">
+                <div>ค่าอุณหภูมิ: <span id="temperatureValue">กำลังโหลด...</span> °C</div>
+                <div>ค่าความชื้น: <span id="humidityValue">กำลังโหลด...</span> %</div>
+                <div>ดัชนีความร้อน: <span id="heatIndexValue">กำลังโหลด...</span> °C</div>
+            </div>
+            <div class="sensor-values">
+                <div>ค่าก๊าซ LPG: <span id="lpgValue">กำลังโหลด...</span> ppm</div>
+                <div>ค่าก๊าซ CO: <span id="coValue">กำลังโหลด...</span> ppm</div>
+                <div>ค่าควัน: <span id="smokeValue">กำลังโหลด...</span> ppm</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSensor = 'temperature';
+        const units = {
+            temperature: '°C',
+            humidity: '%',
+            heat_index: '°C',
+            lpg: 'ppm',
+            co: 'ppm',
+            smoke: 'ppm'
+        };
+        let plotData = {
+            x: [], y: [], type: 'scatter', mode: 'lines+markers', marker: {color: 'blue'}
+        };
+        let layout = {title: 'ข้อมูลเซ็นเซอร์เเบบเรลไทม์', xaxis: {title: 'เวลา'}, yaxis: {title: 'ค่า'}};
+
+        function changeSensor() {
+            currentSensor = document.getElementById('sensorSelect').value;
+            plotData.y = []; // Clear previous data
+            layout.yaxis.title = document.getElementById('sensorSelect').selectedOptions[0].text;
+            Plotly.relayout('myPlot', layout); // Update layout
+            updatePlotData(); // Update plot data for new sensor
+        }
+
+        function updatePlotData() {
+            fetch(`/api/sensor_data?sensor=${currentSensor}`)
+                .then(response => response.json())
+                .then(data => {
+                    plotData.x = data.map(item => item.timestamp);
+                    plotData.y = data.map(item => item.value);
+                    updateStatistics(plotData.y, '#min', '#max', '#avg', units[currentSensor]);
+                    Plotly.react('myPlot', [plotData], layout);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function updateStatistics(dataArray, minId, maxId, avgId, unit) {
+            if (dataArray.length > 0) {
+                const minValue = Math.min(...dataArray);
+                const maxValue = Math.max(...dataArray);
+                const avgValue = (dataArray.reduce((a, b) => a + b, 0) / dataArray.length).toFixed(2);
+                $(minId).text(`${minValue} ${unit}`);
+                $(maxId).text(`${maxValue} ${unit}`);
+                $(avgId).text(`${avgValue} ${unit}`);
+            } else {
+                $(minId).text(`N/A`);
+                $(maxId).text(`N/A`);
+                $(avgId).text(`N/A`);
+            }
+        }
+
+        function updateAllSensorValues() {
+            fetch('/api/all_sensor_values')
+                .then(response => response.json())
+                .then(data => {
+                    $('#temperatureValue').text(data.temperature);
+                    $('#humidityValue').text(data.humidity);
+                    $('#heatIndexValue').text(data.heat_index);
+                    $('#lpgValue').text(data.lpg);
+                    $('#coValue').text(data.co);
+                    $('#smokeValue').text(data.smoke);
+                })
+                .catch(error => console.error('Error fetching sensor values:', error));
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-theme');
+            const themeButton = document.getElementById('themeButton');
+            themeButton.textContent = body.classList.contains('dark-theme') ? 'Dark Theme' : 'Light Theme';
+        }
+
+        setInterval(() => {
+            updatePlotData();
+            updateAllSensorValues();
+        }, 30000); // Update every 30 seconds
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePlotData();
+            updateAllSensorValues();
+        });
+    </script>
+</body>
+</html>
