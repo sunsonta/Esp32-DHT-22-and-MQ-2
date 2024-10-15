@@ -15,5 +15,6 @@ ESP32 for measuring gas and heat index.
 |               | Red              | D14 (Pin 14)       |
 | **Buzzer**    | Control Pin      | D16 (Pin 16)       |
 
+I use resister 220 Ohm for each LEDs.
 
-This table shows the pin connections for different modules in the Arduino project. You can add this table to your GitHub repository README or similar documentation to help others understand the pin configuration required for running the provided code.
+
