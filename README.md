@@ -26,7 +26,7 @@
 | **DHT22**     | VCC              | 3.3V               |
 |               | GND              | GND                |
 |               | Data             | D4                 |
-| **MQ-2**      | VCC              | 5V                 |
+| **MQ-2**      | VCC              | 3.3V (*)           |
 |               | GND              | GND                |
 |               | Analog Out       | A35 (Pin 35)       |
 | **LEDs**      | Green            | D13 (Pin 13)       |
