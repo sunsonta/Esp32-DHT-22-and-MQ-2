@@ -51,6 +51,9 @@ I use resistor 220 Ohm for each LED.
 ### Add Library to Python
 - Install required libraries: `pip install Flask requests Flask-CORS`
 
+  ![image](https://github.com/user-attachments/assets/015f44b4-e8b7-4c1d-a1f7-2ae4afb8a929)
+
+
 ### Edit Python Code
 - Edit `webpython.py` to change the token for Line notify, or leave it as is if not needed.
 
