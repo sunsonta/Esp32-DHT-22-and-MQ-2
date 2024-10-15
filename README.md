@@ -6,12 +6,12 @@
 
 ![Topic Picture](Photo/Ex1.jpg)
 
-
 ## Table of Contents
 
 - [Download AllCode Folder](#download-allcode-folder)
 - [Add Library to Arduino](#add-library-to-arduino)
 - [Upload Arduino Code](#upload-arduino-code)
+- [Add Library to Python](#add-library-to-python)
 - [Edit Python Code](#edit-python-code)
 - [Change Python Port (Optional)](#change-python-port-optional)
 - [Run Python Program](#run-python-program)
@@ -40,13 +40,16 @@ I use resistor 220 Ohm for each LED.
 - Download AllCode and place it on your computer. You must not modify the folder structure in order to run the web server on Python correctly (so that you can easily test it before adapting it for other uses).
 
 ### Add Library to Arduino
-- Download the file libraries.7z from the provided GitHub link and add it to your library for easy setup. Arduino libraries are located at Documents\Arduino.
+- Download the file `libraries.7z` from the provided GitHub link and add it to your library for easy setup. Arduino libraries are located at `Documents\Arduino`.
 
 ### Upload Arduino Code
-- Upload the provided Arduino code from AllCode to your ESP32.
+- Upload the provided Arduino code from `AllCode` to your ESP32.
 - Edit the code to your Wi-Fi SSID, password, and local IP address.
 
   ![image](https://github.com/user-attachments/assets/f0674956-c26b-4fe3-b256-90b9cefeb025)
+  
+### Add Library to Python
+- Install required libraries: `pip install Flask requests Flask-CORS`
 
 ### Edit Python Code
 - Edit `webpython.py` to change the token for Line notify, or leave it as is if not needed.
@@ -64,13 +67,9 @@ I use resistor 220 Ohm for each LED.
   ![image](https://github.com/user-attachments/assets/66613c9c-1830-4a61-ab9f-a18fab092c9c)
 
 ### Completion
-- Congratulations, you have successfully set everything up! (If you want public to see your dashboard use something like ngrok.)
+- Congratulations, you have successfully set everything up! (If you want the public to see your dashboard, use something like ngrok.)
 
   ![image](https://github.com/user-attachments/assets/ba739e62-f810-4707-8cb5-4706ccd7947a)
 
 ### Change Language (Optional)
-- You may need to change the `index` in the templates folder if you want the interface in English.
-
-This is the adjusted README for the project.
-
-[GitHub Repository](https://github.com/sunsonta/Esp32-DHT-22-and-MQ-2/tree/main)
+- You may need to change the `index.html` in the templates folder if you want the interface in English.
